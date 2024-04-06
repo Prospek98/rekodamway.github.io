@@ -173,8 +173,28 @@
    const form = document.getElementById("myForm");
    form.addEventListener("submit", function(event) {
      event.preventDefault();
+     
+     // Validasi setiap input
+     const inputs = document.querySelectorAll("input[type='text'], select, input[type='date']");
+     let isValid = true;
+     inputs.forEach(input => {
+       if (input.value.trim() === "") { // Periksa apakah input kosong
+         isValid = false;
+         input.classList.add("error"); // Tambahkan kelas error untuk menandai input yang belum diisi
+       } else {
+         input.classList.remove("error"); // Hapus kelas error jika input telah diisi
+       }
+     });
+     
+     // Jika tidak semua input diisi, tampilkan pesan peringatan
+     if (!isValid) {
+       alert("Sila lengkapkan semua maklumat sebelum menghantar.");
+       return;
+     }
+     
+     // Jika semua input diisi, lanjutkan pengiriman formulir
      const formData = new FormData(this);
-     const url = "https://script.google.com/macros/s/AKfycbzPiVVDGBuNdYJRwI8akAlAM8Q2LcQd9mfDWwmppdigEhnQGM6gZ22Dwl6lwhvujCFF/exec";
+     const url = "https://script.google.com/macros/s/AKfycbwJAmaZbkVzcUnxGCK7JeI3Z-Cf3UFe6wi7vwJM3AoC0iX-43uKe48-ZTA4MFbfynLT/exec";
      fetch(url, {
        method: "POST",
        body: formData
@@ -188,7 +208,7 @@
      })
      .catch(error => {
        console.error("Error:", error);
-       alert("Sila isi semula maklumat anda.");
+       alert("Terjadi kesalahan. Sila cuba lagi.");
      });
    });
  </script>
