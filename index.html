@@ -1,195 +1,203 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
- <title>REKOD AMWAY</title>
- <style>
-   /* Gaya CSS */
-   body {
-     font-family: Arial, sans-serif;
-     background-color: #f2f2f2;
-     margin: 0;
-     padding: 0;
-   }
-   .container {
-     max-width: 600px;
-     margin: 20px auto;
-     background-color: #fff;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-   }
-   .header {
-     text-align: center;
-     margin-bottom: 20px;
-   }
-   .header img {
-     width: 200px; /* Mengatur lebar maksimum */
-     height: auto;
-     object-fit: contain; /* Menjaga proporsi logo */
-   }
-   h2 {
-     text-align: center;
-     color: #163A5D;
-   }
-   label {
-     font-weight: bold;
-     display: block;
-     margin-bottom: 5px;
-   }
-   input[type="text"],
-   select,
-   input[type="submit"] {
-     width: 100%;
-     padding: 10px;
-     border-radius: 5px;
-     border: 1px solid #ddd;
-     margin-bottom: 10px;
-   }
-   input[type="submit"] {
-     width: auto; /* Mengubah lebar sesuai kebutuhan */
-     margin-top: 10px; /* Menambah jarak dari atas */
-     background-color: #163A5D;
-     color: #fff;
-     cursor: pointer;
-     transition: background-color 0.3s ease;
-   }
-   input[type="submit"]:hover {
-     background-color: #0e2538;
-   }
-   .top-header,
-   .bottom-header {
-     background-color: #163A5D;
-     color: #fff;
-     padding: 10px 0;
-     text-align: center;
-     border-radius: 10px;
-   }
- </style>
- <style>
-   /* Desain header */
-   .top-header {
-     background-color: hwb(216 5% 60%);
-     color: #fff;
-     padding: 20px 0;
-     text-align: center;
-     border-radius: 10px 10px 0 0;
-   }
-   .top-header img {
-     width: 150px;
-     height: auto;
-   }
-   /* Desain footer */
-   .bottom-header {
-     background-color: #104271;
-     color: #fff;
-     padding: 20px 0;
-     text-align: center;
-     border-radius: 0 0 10px 10px;
-   }
-   
-   /* Bayangan pada teks nombor telefon */
-   #nomborTelefon {
-     text-shadow: 0 0 3px rgba(0, 0, 0, 0); /* Bayangan pada teks */
-   }
-   /* Contoh nombor telefon dalam kotak input */
-   #nomborTelefon::placeholder {
-     color: rgba(0, 0, 0, 0.5); /* Warna contoh */
-   }
- </style>
-</head>
-<body>
- <div class="top-header">
-   <img src="img/logo amway diamond.png" alt="Amway Logo">
- </div>
- <div class="container">
-   <div class="header">
-     <h2>ISI MAKLUMAT ANDA</h2>
-   </div>
-   <form id="myForm">
-     <label for="namaABO">Nama ABO:</label>
-     <input type="text" id="namaABO" name="namaABO">
-     
-     <label for="nama">Nama:</label>
-     <input type="text" id="nama" name="nama">
-     
-     <label for="nomborTelefon">Nombor Telefon:</label>
-     <input type="text" id="nomborTelefon" name="nomborTelefon" placeholder="Contoh: 01234567890">
-     
-     <label for="orderNo">Order No:</label>
-     <input type="text" id="orderNo" name="orderNo">
-     
-     <label for="namaProduk">Nama Produk:</label>
-     <input type="text" id="namaProduk" name="namaProduk">
-     
-     <label for="tarikhBeli">Tarikh Beli:</label>
-     <input type="date" id="tarikhBeli" name="tarikhBeli">
-     
-     <label for="bulan">Bulan:</label>
-     <select id="bulan" name="bulan">
-       <option value="">Pilih Bulan</option>
-       <option value="January">Januari</option>
-       <option value="February">Februari</option>
-       <option value="March">Mac</option>
-       <option value="April">April</option>
-       <option value="May">Mei</option>
-       <option value="June">Jun</option>
-       <option value="July">Julai</option>
-       <option value="August">Ogos</option>
-       <option value="September">September</option>
-       <option value="October">Oktober</option>
-       <option value="November">November</option>
-       <option value="December">Disember</option>
-     </select>
-     
-     <label for="totalPV">Total PV:</label>
-     <input type="text" id="totalPV" name="totalPV">
-     
-     <label for="tarikhRepeatOrder">Tarikh Repeat Order:</label>
-     <input type="date" id="tarikhRepeatOrder" name="tarikhRepeatOrder">
-     
-     <input type="submit" value="Submit">
-   </form>
- </div>
- <div class="bottom-header">
-   <p>Hak Cipta © 2024 Persendirian</p>
- </div>
- <script>
-   // Memeriksa nombor telefon dan menambahkan "60" jika tidak ada
-   const nomborTelefonInput = document.getElementById("nomborTelefon");
-   nomborTelefonInput.addEventListener("input", function() {
-     let nomborTelefonValue = this.value;
-     // Hapus spasi dan tanda "-" jika ada
-     nomborTelefonValue = nomborTelefonValue.replace(/\s/g, "").replace(/-/g, "");
-     // Cek apakah nomborTelefonValue dimulai dengan "6"
-     if (!nomborTelefonValue.startsWith("6")) {
-       // Tambahkan "6" di depan jika tidak dimulai dengan "6"
-       nomborTelefonValue = "6" + nomborTelefonValue;
-       // Atur kembali nilai input dengan "60" yang baru ditambahkan
-       this.value = nomborTelefonValue;
-     }
-   });
-   // Pengiriman formulir
-   const form = document.getElementById("myForm");
-   form.addEventListener("submit", function(event) {
-     event.preventDefault();
-     const formData = new FormData(this);
-     const url = "https://script.google.com/macros/s/AKfycbw6sSEw9y8Yy_ygKtKzYgL7QUkFoIa82-LCThZSVXySQJDoPskWgeNRVmxiU8NuajZa/exec";
-     fetch(url, {
-       method: "POST",
-       body: formData
-     })
-     .then(response => response.json())
-     .then(data => {
-       console.log(data);
-       alert("Maklumat anda telah berjaya direkodkan!");
-       // Mengosongkan nilai-nilai input setelah formulir dikirim
-       form.reset();
-     })
-     .catch(error => {
-       console.error("Error:", error);
-       alert("Sila isi semula maklumat anda.");
-     });
-   });
- </script>
-</body>
+  <head>
+    <title>REKOD AMWAY</title>
+    <style>
+      /* Gaya CSS */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .header img {
+        width: 200px; /* Mengatur lebar maksimum */
+        height: auto;
+        object-fit: contain; /* Menjaga proporsi logo */
+      }
+      h2 {
+        text-align: center;
+        color: #163a5d;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+      input[type="text"],
+      select,
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+      }
+      input[type="submit"] {
+        width: auto; /* Mengubah lebar sesuai kebutuhan */
+        margin-top: 10px; /* Menambah jarak dari atas */
+        background-color: #163a5d;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      input[type="submit"]:hover {
+        background-color: #0e2538;
+      }
+      .top-header,
+      .bottom-header {
+        background-color: #163a5d;
+        color: #fff;
+        padding: 10px 0;
+        text-align: center;
+        border-radius: 10px;
+      }
+    </style>
+    <style>
+      /* Desain header */
+      .top-header {
+        background-color: hwb(216 5% 60%);
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+      }
+      .top-header img {
+        width: 150px;
+        height: auto;
+      }
+      /* Desain footer */
+      .bottom-header {
+        background-color: #104271;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        border-radius: 0 0 10px 10px;
+      }
+
+      /* Bayangan pada teks nombor telefon */
+      #nomborTelefon {
+        text-shadow: 0 0 3px rgba(0, 0, 0, 0); /* Bayangan pada teks */
+      }
+      /* Contoh nombor telefon dalam kotak input */
+      #nomborTelefon::placeholder {
+        color: rgba(0, 0, 0, 0.5); /* Warna contoh */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-header">
+      <img src="img/logo amway diamond.png" alt="Amway Logo" />
+    </div>
+    <div class="container">
+      <div class="header">
+        <h2>ISI MAKLUMAT ANDA</h2>
+      </div>
+      <form id="myForm">
+        <label for="namaABO">Nama ABO:</label>
+        <input type="text" id="namaABO" name="namaABO" />
+
+        <label for="nama">Nama:</label>
+        <input type="text" id="nama" name="nama" />
+
+        <label for="nomborTelefon">Nombor Telefon:</label>
+        <input
+          type="text"
+          id="nomborTelefon"
+          name="nomborTelefon"
+          placeholder="Contoh: 01234567890"
+        />
+
+        <label for="orderNo">Order No:</label>
+        <input type="text" id="orderNo" name="orderNo" />
+
+        <label for="namaProduk">Nama Produk:</label>
+        <input type="text" id="namaProduk" name="namaProduk" />
+
+        <label for="tarikhBeli">Tarikh Beli:</label>
+        <input type="date" id="tarikhBeli" name="tarikhBeli" />
+
+        <label for="bulan">Bulan:</label>
+        <select id="bulan" name="bulan">
+          <option value="">Pilih Bulan</option>
+          <option value="January">Januari</option>
+          <option value="February">Februari</option>
+          <option value="March">Mac</option>
+          <option value="April">April</option>
+          <option value="May">Mei</option>
+          <option value="June">Jun</option>
+          <option value="July">Julai</option>
+          <option value="August">Ogos</option>
+          <option value="September">September</option>
+          <option value="October">Oktober</option>
+          <option value="November">November</option>
+          <option value="December">Disember</option>
+        </select>
+
+        <label for="totalPV">Total PV:</label>
+        <input type="text" id="totalPV" name="totalPV" />
+
+        <label for="tarikhRepeatOrder">Tarikh Repeat Order:</label>
+        <input type="date" id="tarikhRepeatOrder" name="tarikhRepeatOrder" />
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <div class="bottom-header">
+      <p>Hak Cipta © 2024 Persendirian</p>
+    </div>
+    <script>
+      // Memeriksa nombor telefon dan menambahkan "60" jika tidak ada
+      const nomborTelefonInput = document.getElementById("nomborTelefon");
+      nomborTelefonInput.addEventListener("input", function () {
+        let nomborTelefonValue = this.value;
+        // Hapus spasi dan tanda "-" jika ada
+        nomborTelefonValue = nomborTelefonValue
+          .replace(/\s/g, "")
+          .replace(/-/g, "");
+        // Cek apakah nomborTelefonValue dimulai dengan "6"
+        if (!nomborTelefonValue.startsWith("6")) {
+          // Tambahkan "6" di depan jika tidak dimulai dengan "6"
+          nomborTelefonValue = "6" + nomborTelefonValue;
+          // Atur kembali nilai input dengan "60" yang baru ditambahkan
+          this.value = nomborTelefonValue;
+        }
+      });
+      // Pengiriman formulir
+      const form = document.getElementById("myForm");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const url =
+          "https://script.google.com/macros/s/AKfycbx4L0iYfHSc_dvVslRly2xdSepuR0lozGxw5yljupimiTthXXZjXY3K3WcjzG7pdm-_/exec";
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            alert("Maklumat anda telah berjaya direkodkan!");
+            // Mengosongkan nilai-nilai input setelah formulir dikirim
+            form.reset();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Sila isi semula maklumat anda.");
+          });
+      });
+    </script>
+  </body>
 </html>
