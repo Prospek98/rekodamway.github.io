@@ -90,11 +90,11 @@
    }
    
    /* Bayangan pada teks nombor telefon */
-   #nomborTelefon {
+   #nomborTelefonCustomer {
      text-shadow: 0 0 3px rgba(0, 0, 0, 0); /* Bayangan pada teks */
    }
    /* Contoh nombor telefon dalam kotak input */
-   #nomborTelefon::placeholder {
+   #nomborTelefonCustomer::placeholder {
      color: rgba(0, 0, 0, 0.5); /* Warna contoh */
    }
    
@@ -130,17 +130,17 @@
  </div>
  <div class="container">
    <div class="header">
-     <h2>ISI MAKLUMAT ANDA</h2>
+     <h2>SILA ISI MAKLUMAT</h2>
    </div>
    <form id="myForm">
-     <label for="namaABO">Nama ABO:</label>
-     <input type="text" id="namaABO" name="namaABO">
+     <label for="namaAnda">Nama Anda:</label>
+     <input type="text" id="namaAnda" name="namaAnda">
      
      <label for="namaCustomer">Nama Customer:</label>
-     <input type="text" id="nama" name="namaCustomer">
+     <input type="text" id="namaCustomer" name="namaCustomer">
      
-     <label for="nomborTelefon">Nombor Telefon:</label>
-     <input type="text" id="nomborTelefon" name="nomborTelefon" placeholder="Contoh: 01234567890">
+     <label for="nomborTelefonCustomer">Nombor Telefon Customer:</label>
+     <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 01234567890">
      
      <label for="orderNo">Order No:</label>
      <input type="text" id="orderNo" name="orderNo">
@@ -183,7 +183,7 @@
  </div>
  <script>
    // Memeriksa nombor telefon dan menambahkan "60" jika tidak ada
-   const nomborTelefonInput = document.getElementById("nomborTelefon");
+   const nomborTelefonInput = document.getElementById("nomborTelefonCustomer");
    nomborTelefonInput.addEventListener("input", function() {
      let nomborTelefonValue = this.value;
      // Hapus spasi dan tanda "-" jika ada
@@ -238,7 +238,7 @@
      }
 
      const formData = new FormData(this);
-     const url = "https://script.google.com/macros/s/AKfycbxrgbEAHrYvbauTHcTpCvrdk18c80y34FUmmQ9d0RdrRfeZ1WaFPQpvLER3YYoNewR7/exec";
+     const url = "https://script.google.com/macros/s/AKfycbywQsNM9a4VeErCXk9WZVa43Bqy0etI-qiib1OHSBgxaWKDcbFWT_Yqc-EGyW8FgKvp/exec";
      fetch(url, {
        method: "POST",
        body: formData,
