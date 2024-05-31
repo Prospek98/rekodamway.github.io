@@ -189,9 +189,9 @@
      // Hapus spasi dan tanda "-" jika ada
      nomborTelefonValue = nomborTelefonValue.replace(/\s/g, "").replace(/-/g, "");
      // Cek apakah nomborTelefonValue dimulai dengan "6"
-     if (!nomborTelefonValue.startsWith("6")) {
+     if (!nomborTelefonValue.startsWith("")) {
        // Tambahkan "6" di depan jika tidak dimulai dengan "6"
-       nomborTelefonValue = "6" + nomborTelefonValue;
+       nomborTelefonValue = "" + nomborTelefonValue;
        // Atur kembali nilai input dengan "60" yang baru ditambahkan
        this.value = nomborTelefonValue;
      }
