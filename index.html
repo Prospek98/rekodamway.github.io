@@ -10,6 +10,13 @@
      background-color: #f2f2f2;
      margin: 0;
      padding: 0;
+     opacity: 0; /* Awal tidak terlihat */
+     animation: fadeIn 2s forwards; /* Efek fade-in */
+   }
+   @keyframes fadeIn {
+     to {
+       opacity: 1; /* Akhir terlihat */
+     }
    }
    .container {
      max-width: 600px;
@@ -18,16 +25,25 @@
      padding: 20px;
      border-radius: 10px;
      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-     position: relative; /* Tambahkan properti position */
+     position: relative;
+     animation: slideIn 1s forwards; /* Efek slide-in */
+     transform: translateY(20px); /* Awal sedikit di bawah */
+     opacity: 0; /* Awal tidak terlihat */
+   }
+   @keyframes slideIn {
+     to {
+       transform: translateY(0); /* Akhir pada posisi normal */
+       opacity: 1; /* Akhir terlihat */
+     }
    }
    .header {
      text-align: center;
      margin-bottom: 20px;
    }
    .header img {
-     max-width: 200px; /* Mengatur lebar maksimum */
+     max-width: 200px;
      height: auto;
-     object-fit: contain; /* Menjaga proporsi logo */
+     object-fit: contain;
    }
    h2 {
      text-align: center;
@@ -39,24 +55,76 @@
      margin-bottom: 5px;
    }
    input[type="text"],
-   select,
-   input[type="submit"] {
+   input[type="date"],
+   select {
      width: 100%;
      padding: 10px;
      border-radius: 5px;
      border: 1px solid #ddd;
      margin-bottom: 10px;
+     transition: border-color 0.3s, box-shadow 0.3s; /* Efek transisi */
+   }
+   input[type="text"]:hover,
+   input[type="date"]:hover,
+   select:hover {
+     border-color: #090419;
+     box-shadow: 0 0 5px rgba(9, 4, 25, 0.3); /* Efek hover */
    }
    input[type="submit"] {
-     width: auto; /* Mengubah lebar sesuai kebutuhan */
-     margin-top: 10px; /* Menambah jarak dari atas */
+     width: auto;
+     margin-top: 10px;
+     padding: 12px 20px;
      background-color: #090419;
      color: #fff;
      cursor: pointer;
-     transition: background-color 0.3s ease;
+     transition: background-color 0.3s, transform 0.3s; /* Efek transisi */
+     border: none;
+     border-radius: 5px;
+     font-size: 18px;
    }
    input[type="submit"]:hover {
      background-color: #b3cfe5;
+     transform: scale(1.05); /* Efek hover */
+   }
+   .status-button-group {
+     display: flex;
+     justify-content: space-between;
+     margin-bottom: 10px;
+   }
+   .status-button-group input[type="radio"] {
+     display: none;
+   }
+   .status-button-group label {
+     flex: 1;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 10px;
+     margin: 0 5px;
+     color: #000;
+     cursor: pointer;
+     transition: color 0.3s, transform 0.3s; /* Efek transisi */
+     text-align: center;
+     font-size: 14px;
+     position: relative;
+   }
+   .status-button-group label::before {
+     content: '';
+     width: 12px;
+     height: 12px;
+     border-radius: 50%;
+     background-color: #ddd;
+     border: 2px solid #ddd;
+     margin-right: 5px;
+     transition: background-color 0.3s, border-color 0.3s; /* Efek transisi */
+   }
+   .status-button-group input[type="radio"]:checked + label::before {
+     background-color: #090419;
+     border-color: #090419;
+   }
+   .status-button-group label:hover {
+     color: #090419;
+     transform: scale(1.1); /* Efek hover */
    }
    .top-header,
    .bottom-header {
@@ -65,10 +133,14 @@
      padding: 10px 0;
      text-align: center;
      border-radius: 10px;
+     transition: background-color 0.3s; /* Efek transisi */
+   }
+   .top-header:hover,
+   .bottom-header:hover {
+     background-color: #b3cfe5;
    }
  </style>
  <style>
-   /* Desain header */
    .top-header {
      background-color: #f1ea26;
      color: #fff;
@@ -80,7 +152,6 @@
      width: 150px;
      height: auto;
    }
-   /* Desain footer */
    .bottom-header {
      background-color: #f1ea26;
      color: #181515; 
@@ -89,16 +160,13 @@
      border-radius: 0 0 10px 10px;
    }
    
-   /* Bayangan pada teks nombor telefon */
    #nomborTelefonCustomer {
-     text-shadow: 0 0 3px rgba(0, 0, 0, 0); /* Bayangan pada teks */
+     text-shadow: 0 0 3px rgba(0, 0, 0, 0);
    }
-   /* Contoh nombor telefon dalam kotak input */
    #nomborTelefonCustomer::placeholder {
-     color: rgba(0, 0, 0, 0.5); /* Warna contoh */
+     color: rgba(0, 0, 0, 0.5);
    }
    
-   /* Spinner loading */
    .spinner {
      border: 4px solid rgba(0, 0, 0, 0.1);
      border-left-color: #090419;
@@ -109,9 +177,9 @@
      position: absolute;
      top: 50%;
      left: 50%;
-     transform: translate(-50%, -50%); /* Atur posisi ke tengah-tengah */
-     z-index: 1000; /* Menempatkan spinner di atas konten lain */
-     display: none; /* Sembunyikan spinner secara default */
+     transform: translate(-50%, -50%);
+     z-index: 1000;
+     display: none;
    }
 
    @keyframes spin {
@@ -133,6 +201,9 @@
      <h2>SILA ISI MAKLUMAT</h2>
    </div>
    <form id="myForm">
+     <label for="namaLeader">Nama Leader:</label>
+     <input type="text" id="namaLeader" name="namaLeader">
+
      <label for="namaAnda">Nama Anda:</label>
      <input type="text" id="namaAnda" name="namaAnda">
      
@@ -142,12 +213,19 @@
      <label for="nomborTelefonCustomer">Nombor Telefon Customer:</label>
      <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 01234567890">
      
-     <label for="orderNo">Order No:</label>
-     <input type="text" id="orderNo" name="orderNo">
+     <label for="statusKeahlian">Status Keahlian:</label>
+     <div class="status-button-group">
+       <input type="radio" id="apc" name="statusKeahlian" value="APC">
+       <label for="apc"><span class="point"></span>APC</label>
+       <input type="radio" id="abo" name="statusKeahlian" value="ABO">
+       <label for="abo"><span class="point"></span>ABO</label>
+       <input type="radio" id="belumAhli" name="statusKeahlian" value="Belum Ahli">
+       <label for="belumAhli"><span class="point"></span>Belum Ahli</label>
+     </div>
      
      <label for="namaProduk">Nama Produk:</label>
      <input type="text" id="namaProduk" name="namaProduk">
-     
+
      <label for="tarikhBeli">Tarikh Beli:</label>
      <input type="date" id="tarikhBeli" name="tarikhBeli">
      
@@ -174,9 +252,9 @@
      <label for="tarikhRepeatOrder">Tarikh Repeat Order:</label>
      <input type="date" id="tarikhRepeatOrder" name="tarikhRepeatOrder">
      
-     <input type="submit" value="Submit" onclick="showSpinner()"> <!-- Tambahkan event onclick -->
+     <input type="submit" value="Submit" onclick="showSpinner()">
    </form>
-   <div class="spinner" id="spinner"></div> <!-- Tambahkan div spinner -->
+   <div class="spinner" id="spinner"></div>
  </div>
  <div class="bottom-header">
    <p>BaimDila Unity @ 2024</p>
@@ -186,13 +264,9 @@
    const nomborTelefonInput = document.getElementById("nomborTelefonCustomer");
    nomborTelefonInput.addEventListener("input", function() {
      let nomborTelefonValue = this.value;
-     // Hapus spasi dan tanda "-" jika ada
      nomborTelefonValue = nomborTelefonValue.replace(/\s/g, "").replace(/-/g, "");
-     // Cek apakah nomborTelefonValue dimulai dengan "6"
      if (!nomborTelefonValue.startsWith("")) {
-       // Tambahkan "6" di depan jika tidak dimulai dengan "6"
        nomborTelefonValue = "" + nomborTelefonValue;
-       // Atur kembali nilai input dengan "60" yang baru ditambahkan
        this.value = nomborTelefonValue;
      }
    });
@@ -210,17 +284,14 @@
    });
 
    function showSpinner() {
-     // Menampilkan spinner loading
      const spinner = document.getElementById("spinner");
      spinner.style.display = "block";
    }
 
-   // Pengiriman formulir
    const form = document.getElementById("myForm");
    form.addEventListener("submit", function(event) {
      event.preventDefault();
 
-     // Validasi setiap input
      const inputs = document.querySelectorAll("input[type='text'], select, input[type='date']");
      let isValid = true;
      inputs.forEach(input => {
@@ -238,7 +309,7 @@
      }
 
      const formData = new FormData(this);
-     const url = "https://script.google.com/macros/s/AKfycbxr1TQLIULJ5GaS8Lr4EajGybnElUPRBT-ynQ9B_r7suhUUZA6MohyKMn_0NKEqu5Mn/exec";
+     const url = "https://script.google.com/macros/s/AKfycbxr1TQLIULJ5GaS8Lr4EajGybnElUPRBT-ynQ9B_r7suhUUZA6MohyKMn_0NKEqu5Mn/exec"
      fetch(url, {
        method: "POST",
        body: formData,
@@ -248,13 +319,11 @@
          console.log(data);
          alert("Maklumat anda telah berjaya direkodkan!");
          form.reset();
-         // Sembunyikan spinner loading setelah formulir dikirim
          document.getElementById("spinner").style.display = "none";
        })
        .catch(error => {
          console.error("Error:", error);
          alert("Terjadi kesalahan. Sila cuba lagi.");
-         // Sembunyikan spinner loading jika terjadi kesalahan
          document.getElementById("spinner").style.display = "none";
        });
    });
