@@ -214,7 +214,7 @@
      <input type="text" id="namaCustomer" name="namaCustomer" required>
      
      <label for="nomborTelefonCustomer">Nombor Telefon Customer:</label>
-     <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 01234567890" pattern="\d{10,11}" inputmode="numeric" required>
+     <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 60123456789" pattern="6\d{9,10}" inputmode="numeric" required>
      
      <label for="statusKeahlian">Status Keahlian Customer:</label>
      <div class="status-button-group" id="statusKeahlianGroup">
@@ -263,13 +263,13 @@
    <p>BaimDila Unity @ 2024</p>
  </div>
  <script>
-   // Memeriksa nombor telefon dan menambahkan "60" jika tidak ada
+   // Memeriksa nombor telefon dan menambahkan "6" jika tidak ada
    const nomborTelefonInput = document.getElementById("nomborTelefonCustomer");
    nomborTelefonInput.addEventListener("input", function() {
      let nomborTelefonValue = this.value;
      nomborTelefonValue = nomborTelefonValue.replace(/\s/g, "").replace(/-/g, "");
-     if (!nomborTelefonValue.startsWith("")) {
-       nomborTelefonValue = "" + nomborTelefonValue;
+     if (!nomborTelefonValue.startsWith("6")) {
+       nomborTelefonValue = "6" + nomborTelefonValue;
        this.value = nomborTelefonValue;
      }
    });
@@ -304,9 +304,9 @@
 
      const phoneInput = document.getElementById("nomborTelefonCustomer");
      const phoneValue = phoneInput.value.trim();
-     if (!/^\d{10,11}$/.test(phoneValue)) {
+     if (!/^6\d{9,10}$/.test(phoneValue)) {
        isValid = false;
-       alert("Nombor telefon mestilah antara 10 hingga 11 digit dan hanya mengandungi nombor.");
+       alert("Nombor telefon mestilah bermula dengan 6 dan mengandungi antara 10 hingga 11 digit.");
        phoneInput.classList.add("error");
      } else {
        phoneInput.classList.remove("error");
