@@ -90,6 +90,9 @@
      display: flex;
      justify-content: space-between;
      margin-bottom: 10px;
+     border: 1px solid #ddd; /* Kotak border */
+     padding: 10px;
+     border-radius: 5px;
    }
    .status-button-group input[type="radio"] {
      display: none;
@@ -202,35 +205,35 @@
    </div>
    <form id="myForm">
      <label for="namaLeader">Nama Leader:</label>
-     <input type="text" id="namaLeader" name="namaLeader">
+     <input type="text" id="namaLeader" name="namaLeader" required>
 
      <label for="namaAnda">Nama Anda:</label>
-     <input type="text" id="namaAnda" name="namaAnda">
+     <input type="text" id="namaAnda" name="namaAnda" required>
      
      <label for="namaCustomer">Nama Customer:</label>
-     <input type="text" id="namaCustomer" name="namaCustomer">
+     <input type="text" id="namaCustomer" name="namaCustomer" required>
      
      <label for="nomborTelefonCustomer">Nombor Telefon Customer:</label>
-     <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 01234567890">
+     <input type="text" id="nomborTelefonCustomer" name="nomborTelefonCustomer" placeholder="Contoh: 01234567890" pattern="\d{10,11}" inputmode="numeric" required>
      
      <label for="statusKeahlian">Status Keahlian:</label>
-     <div class="status-button-group">
-       <input type="radio" id="apc" name="statusKeahlian" value="APC">
+     <div class="status-button-group" id="statusKeahlianGroup">
+       <input type="radio" id="apc" name="statusKeahlian" value="APC" required>
        <label for="apc"><span class="point"></span>APC</label>
-       <input type="radio" id="abo" name="statusKeahlian" value="ABO">
+       <input type="radio" id="abo" name="statusKeahlian" value="ABO" required>
        <label for="abo"><span class="point"></span>ABO</label>
-       <input type="radio" id="belumAhli" name="statusKeahlian" value="Belum Ahli">
+       <input type="radio" id="belumAhli" name="statusKeahlian" value="Belum Ahli" required>
        <label for="belumAhli"><span class="point"></span>Belum Ahli</label>
      </div>
      
      <label for="namaProduk">Nama Produk:</label>
-     <input type="text" id="namaProduk" name="namaProduk">
+     <input type="text" id="namaProduk" name="namaProduk" required>
 
      <label for="tarikhBeli">Tarikh Beli:</label>
-     <input type="date" id="tarikhBeli" name="tarikhBeli">
+     <input type="date" id="tarikhBeli" name="tarikhBeli" required>
      
      <label for="bulan">Bulan:</label>
-     <select id="bulan" name="bulan">
+     <select id="bulan" name="bulan" required>
        <option value="">Pilih Bulan</option>
        <option value="January">Januari</option>
        <option value="February">Februari</option>
@@ -247,12 +250,12 @@
      </select>
      
      <label for="totalPV">Total PV:</label>
-     <input type="text" id="totalPV" name="totalPV">
+     <input type="text" id="totalPV" name="totalPV" required>
      
      <label for="tarikhRepeatOrder">Tarikh Repeat Order:</label>
-     <input type="date" id="tarikhRepeatOrder" name="tarikhRepeatOrder">
+     <input type="date" id="tarikhRepeatOrder" name="tarikhRepeatOrder" required>
      
-     <input type="submit" value="Submit" onclick="showSpinner()">
+     <input type="submit" value="Submit" onclick="return validateForm()">
    </form>
    <div class="spinner" id="spinner"></div>
  </div>
@@ -283,19 +286,15 @@
      }
    });
 
-   function showSpinner() {
+   function validateForm() {
      const spinner = document.getElementById("spinner");
-     spinner.style.display = "block";
-   }
+     const form = document.getElementById("myForm");
 
-   const form = document.getElementById("myForm");
-   form.addEventListener("submit", function(event) {
-     event.preventDefault();
-
-     const inputs = document.querySelectorAll("input[type='text'], select, input[type='date']");
+     const inputs = form.querySelectorAll("input[type='text'], select, input[type='date'], input[type='tel']");
      let isValid = true;
+
      inputs.forEach(input => {
-       if (input.value.trim() === "") {
+       if (input.value.trim() === "" || !input.checkValidity()) {
          isValid = false;
          input.classList.add("error");
        } else {
@@ -303,13 +302,42 @@
        }
      });
 
+     const phoneInput = document.getElementById("nomborTelefonCustomer");
+     const phoneValue = phoneInput.value.trim();
+     if (!/^\d{10,11}$/.test(phoneValue)) {
+       isValid = false;
+       alert("Nombor telefon mestilah antara 10 hingga 11 digit dan hanya mengandungi nombor.");
+       phoneInput.classList.add("error");
+     } else {
+       phoneInput.classList.remove("error");
+     }
+
+     const radioInputs = form.querySelectorAll("input[name='statusKeahlian']");
+     const radioChecked = Array.from(radioInputs).some(input => input.checked);
+     if (!radioChecked) {
+       isValid = false;
+       alert("Sila pilih status keahlian.");
+     }
+
      if (!isValid) {
        alert("Sila lengkapkan semua maklumat sebelum menghantar.");
+       return false;
+     }
+
+     spinner.style.display = "block";
+     return true;
+   }
+
+   const form = document.getElementById("myForm");
+   form.addEventListener("submit", function(event) {
+     event.preventDefault();
+
+     if (!validateForm()) {
        return;
      }
 
      const formData = new FormData(this);
-     const url = "https://script.google.com/macros/s/AKfycbxr1TQLIULJ5GaS8Lr4EajGybnElUPRBT-ynQ9B_r7suhUUZA6MohyKMn_0NKEqu5Mn/exec"
+     const url = "https://script.google.com/macros/s/AKfycbxr1TQLIULJ5GaS8Lr4EajGybnElUPRBT-ynQ9B_r7suhUUZA6MohyKMn_0NKEqu5Mn/exec";
      fetch(url, {
        method: "POST",
        body: formData,
